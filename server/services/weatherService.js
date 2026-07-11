@@ -27,6 +27,12 @@ async function fetchWithTimeout(url, timeoutMs = TIMEOUT_MS) {
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
     return await res.json();
   } catch (err) {
+    console.error(`[WeatherService] Fetch failure for URL: ${url}`);
+    console.error(`[WeatherService] fetchFn type: ${typeof fetchFn}, name: ${fetchFn.name || 'anonymous'}`);
+    console.error(`[WeatherService] Error message: ${err.message}`);
+    if (err.stack) console.error(`[WeatherService] Error stack:`, err.stack);
+    if (err.cause) console.error(`[WeatherService] Error cause:`, err.cause);
+
     if (err.name === 'AbortError') {
       throw new Error(`Request timed out after ${timeoutMs}ms`);
     }

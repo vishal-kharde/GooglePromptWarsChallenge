@@ -41,7 +41,8 @@ function errorHandler(err, req, res, _next) {
 
   // Always log errors server-side
   console.error(`[ERROR] ${req.method} ${req.path} → ${status}: ${err.message}`);
-  if (!IS_PROD) console.error(err.stack);
+  if (err.stack) console.error(err.stack);
+  if (err.cause) console.error('Error Cause:', err.cause);
 
   res.status(status).json({
     error: getErrorTitle(status),
