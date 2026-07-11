@@ -1,11 +1,12 @@
 'use strict';
 
-// Set DNS resolution to prefer IPv4 first. This prevents native fetch (Node 18+)
-// from throwing "fetch failed" errors in IPv6-constrained container environments like Render.
-const dns = require('dns');
-if (dns.setDefaultResultOrder) {
-  dns.setDefaultResultOrder('ipv4first');
-}
+// Set DNS resolution order to default (verbatim). We previously forced ipv4first to workaround
+// native fetch issues, but now that we use node-fetch, standard verbatim resolution is preferred
+// to avoid DNS lookup failures on IPv6-only/NAT64 environments like Render.
+// const dns = require('dns');
+// if (dns.setDefaultResultOrder) {
+//   dns.setDefaultResultOrder('ipv4first');
+// }
 
 /**
  * MonsoonGuard AI — Express server entry point.
