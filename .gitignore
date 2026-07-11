@@ -1,5 +1,5 @@
 node_modules/
-# .env intentionally committed — contains no secrets (API key is set via platform env vars)
+.env
 *.db
 *.db-journal
 coverage/
