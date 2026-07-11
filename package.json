@@ -4,12 +4,12 @@
   "description": "GenAI-powered monsoon preparedness and citizen assistance platform",
   "main": "server/index.js",
   "scripts": {
-    "start":       "node server/index.js",
-    "dev":         "nodemon server/index.js --ignore public/",
-    "seed":        "node server/db/seed.js",
-    "test":        "jest --coverage --forceExit --silent",
-    "test:watch":  "jest --watch --no-coverage",
-    "lint":        "eslint server/ --ext .js --fix"
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js --ignore public/",
+    "seed": "node server/db/seed.js",
+    "test": "jest --coverage --forceExit --silent",
+    "test:watch": "jest --watch --no-coverage",
+    "lint": "eslint server/ --ext .js --fix"
   },
   "jest": {
     "testEnvironment": "node",
@@ -38,7 +38,6 @@
     "express": "^4.19.2",
     "express-rate-limit": "^7.3.1",
     "helmet": "^7.1.0",
-    "node-fetch": "^2.7.0",
     "uuid": "^10.0.0",
     "xss": "^1.0.15"
   },

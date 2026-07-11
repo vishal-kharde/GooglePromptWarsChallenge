@@ -5,15 +5,12 @@
  * Handles geocoding (city name → lat/lon) and forecast retrieval.
  */
 
-// Use node-fetch to respect dns.setDefaultResultOrder('ipv4first')
-// and avoid undici/native fetch "fetch failed" errors on Render.com.
-const fetchFn = require('node-fetch');
 require('dotenv').config();
-
+ 
 const BASE_URL   = process.env.OPEN_METEO_BASE_URL  || 'https://api.open-meteo.com/v1';
 const GEO_URL    = process.env.OPEN_METEO_GEO_URL   || 'https://geocoding-api.open-meteo.com/v1';
 const TIMEOUT_MS = 15000; // Increased to 15s to handle slower external API queries on Render
-
+ 
 /**
  * Fetch with timeout wrapper.
  * @param {string} url
@@ -23,16 +20,15 @@ async function fetchWithTimeout(url, timeoutMs = TIMEOUT_MS) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const res = await fetchFn(url, { signal: controller.signal });
+    const res = await fetch(url, { signal: controller.signal });
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
     return await res.json();
   } catch (err) {
     console.error(`[WeatherService] Fetch failure for URL: ${url}`);
-    console.error(`[WeatherService] fetchFn type: ${typeof fetchFn}, name: ${fetchFn.name || 'anonymous'}`);
     console.error(`[WeatherService] Error message: ${err.message}`);
     if (err.stack) console.error(`[WeatherService] Error stack:`, err.stack);
     if (err.cause) console.error(`[WeatherService] Error cause:`, err.cause);
-
+ 
     if (err.name === 'AbortError') {
       throw new Error(`Request timed out after ${timeoutMs}ms`);
     }
