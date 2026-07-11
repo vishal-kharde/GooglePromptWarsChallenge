@@ -6,7 +6,7 @@
  */
 
 const { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } = require('@google/generative-ai');
-require('dotenv').config();
+require('dotenv').config({ override: true });
 
 const API_KEY = process.env.GEMINI_API_KEY;
 if (!API_KEY) {

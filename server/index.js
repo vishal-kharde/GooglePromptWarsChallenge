@@ -12,7 +12,7 @@ if (dns.setDefaultResultOrder) {
  * Wires up all middleware, routes, and starts the HTTP server.
  */
 
-require('dotenv').config();
+require('dotenv').config({ override: true });
 
 const express     = require('express');
 const helmet      = require('helmet');
