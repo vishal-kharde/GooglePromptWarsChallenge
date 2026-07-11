@@ -7,8 +7,8 @@
 
 require('dotenv').config();
  
-const BASE_URL   = process.env.OPEN_METEO_BASE_URL  || 'https://api.open-meteo.com/v1';
-const GEO_URL    = process.env.OPEN_METEO_GEO_URL   || 'https://geocoding-api.open-meteo.com/v1';
+const BASE_URL   = process.env.OPEN_METEO_BASE_URL  || 'http://api.open-meteo.com/v1';
+const GEO_URL    = process.env.OPEN_METEO_GEO_URL   || 'http://geocoding-api.open-meteo.com/v1';
 const TIMEOUT_MS = 15000; // Increased to 15s to handle slower external API queries on Render
  
 /**
