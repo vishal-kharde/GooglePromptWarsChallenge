@@ -1,0 +1,245 @@
+/* ============================================================
+   MonsoonGuard AI — Animations & Micro-interactions
+   ============================================================ */
+
+/* ============================================================
+   Keyframe Definitions
+   ============================================================ */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(1.3); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideOutRight {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(40px); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30%            { transform: translateY(-8px); }
+}
+
+@keyframes rain-fall {
+  0%   { transform: translateY(-10px) translateX(0); opacity: 0; }
+  10%  { opacity: 0.8; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(100vh) translateX(20px); opacity: 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 12px var(--color-accent-glow); }
+  50%       { box-shadow: 0 0 24px rgba(0, 200, 240, 0.5); }
+}
+
+@keyframes gauge-fill {
+  from { stroke-dashoffset: 283; }
+  to   { stroke-dashoffset: var(--target-dashoffset); }
+}
+
+@keyframes number-count {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes alert-flash {
+  0%, 100% { background: transparent; }
+  50%       { background: rgba(239, 68, 68, 0.1); }
+}
+
+/* ============================================================
+   Page Transitions
+   ============================================================ */
+.page-transition-enter {
+  animation: fadeInUp 0.3s ease forwards;
+}
+
+.page-transition-exit {
+  animation: fadeIn 0.15s ease reverse forwards;
+}
+
+/* ============================================================
+   Card Entrance Animations
+   ============================================================ */
+.card-animate {
+  animation: scaleIn 0.3s ease forwards;
+  opacity: 0;
+}
+
+.card-animate:nth-child(1) { animation-delay: 0ms; }
+.card-animate:nth-child(2) { animation-delay: 60ms; }
+.card-animate:nth-child(3) { animation-delay: 120ms; }
+.card-animate:nth-child(4) { animation-delay: 180ms; }
+.card-animate:nth-child(5) { animation-delay: 240ms; }
+.card-animate:nth-child(6) { animation-delay: 300ms; }
+
+/* ============================================================
+   Checklist Item Animation
+   ============================================================ */
+.checklist-item {
+  animation: fadeInUp 0.25s ease forwards;
+  opacity: 0;
+}
+
+.checklist-item:nth-child(n) {
+  animation-delay: calc(var(--index, 0) * 30ms);
+}
+
+/* Completion animation */
+.checklist-item.completing {
+  animation: pulse 0.3s ease;
+}
+
+/* ============================================================
+   Chat Message Animations
+   ============================================================ */
+.chat-message {
+  animation: fadeInUp 0.25s ease forwards;
+}
+
+.chat-message.user { animation-name: fadeInUp; }
+
+/* ============================================================
+   Weather Widget Animations
+   ============================================================ */
+.weather-icon-large {
+  animation: float 3s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* ============================================================
+   Logo Glow
+   ============================================================ */
+.logo-icon {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* ============================================================
+   Risk Gauge Animation
+   ============================================================ */
+.gauge-arc {
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              stroke 0.5s ease;
+}
+
+/* ============================================================
+   Alert Bar Flash
+   ============================================================ */
+.alert-flash {
+  animation: alert-flash 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   Stat Card Counter
+   ============================================================ */
+.stat-value {
+  animation: number-count 0.4s ease forwards;
+}
+
+/* ============================================================
+   Button Ripple Effect
+   ============================================================ */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0);
+  animation: ripple-effect 0.5s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple-effect {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ============================================================
+   Navigation Active Indicator
+   ============================================================ */
+.nav-item.active .nav-icon {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   Map Marker Bounce
+   ============================================================ */
+.leaflet-marker-icon.new-marker {
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+/* ============================================================
+   Scroll Reveal (used with IntersectionObserver)
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   Reduced Motion Accessibility
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .rain-canvas { display: none; }
+}

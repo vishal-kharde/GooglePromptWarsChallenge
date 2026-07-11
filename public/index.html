@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070d1a" />
+
+  <!-- SEO -->
+  <title>MonsoonGuard AI — Monsoon Preparedness & Citizen Assistance</title>
+  <meta name="description" content="AI-powered monsoon preparedness platform for South Asia. Get personalized safety plans, real-time weather alerts, multilingual guidance, and community support during monsoon season." />
+  <meta name="keywords" content="monsoon preparedness, flood safety, emergency planning, India weather, GenAI, Gemini AI" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="MonsoonGuard AI" />
+  <meta property="og:description" content="AI-powered monsoon preparedness for every Indian citizen." />
+  <meta property="og:type" content="website" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/animations.css" />
+
+
+</head>
+
+<body>
+  <!-- Animated Rain Background -->
+  <canvas id="rain-canvas" aria-hidden="true"></canvas>
+
+  <!-- Toast Notifications Container -->
+  <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
+
+  <!-- Main App Shell -->
+  <div id="app">
+
+    <!-- ========== SIDEBAR ========== -->
+    <nav id="sidebar" role="navigation" aria-label="Main navigation">
+      <div class="sidebar-header">
+        <a href="#dashboard" class="logo" aria-label="MonsoonGuard AI home">
+          <div class="logo-icon" aria-hidden="true">🌧️</div>
+          <div class="logo-text">Monsoon<span>Guard</span></div>
+        </a>
+      </div>
+
+      <div class="sidebar-nav">
+        <div class="nav-section-label">Main</div>
+
+        <button class="nav-item active" data-page="dashboard" aria-current="page" id="nav-dashboard">
+          <span class="nav-icon" aria-hidden="true">🏠</span>
+          Dashboard
+        </button>
+
+        <button class="nav-item" data-page="plan" id="nav-plan">
+          <span class="nav-icon" aria-hidden="true">📋</span>
+          My Plan
+        </button>
+
+        <button class="nav-item" data-page="checklist" id="nav-checklist">
+          <span class="nav-icon" aria-hidden="true">✅</span>
+          Checklist
+        </button>
+
+        <button class="nav-item" data-page="chat" id="nav-chat">
+          <span class="nav-icon" aria-hidden="true">🤖</span>
+          AI Assistant
+        </button>
+
+        <div class="nav-section-label">Community</div>
+
+
+        <button class="nav-item" data-page="shelters" id="nav-shelters">
+          <span class="nav-icon" aria-hidden="true">🏥</span>
+          Shelters
+        </button>
+
+        <div class="nav-section-label">Safety</div>
+
+        <button class="nav-item" data-page="travel" id="nav-travel">
+          <span class="nav-icon" aria-hidden="true">🚗</span>
+          Travel Advisory
+        </button>
+
+        <button class="nav-item" data-page="recovery" id="nav-recovery">
+          <span class="nav-icon" aria-hidden="true">🔄</span>
+          Recovery Guide
+        </button>
+
+        <div class="nav-section-label">Settings</div>
+
+        <button class="nav-item" data-page="profile" id="nav-profile">
+          <span class="nav-icon" aria-hidden="true">👤</span>
+          My Profile
+        </button>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="emergency-banner" role="complementary" aria-label="Emergency contacts">
+          <strong>🚨 Emergency Numbers</strong>
+          <a href="tel:112">📞 112 — National Emergency</a>
+          <a href="tel:1800-180-1717">🌩️ IMD Weather: 1800-180-1717</a>
+          <a href="tel:011-24363260">🚁 NDRF: 011-24363260</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Sidebar overlay for mobile -->
+    <div id="sidebar-overlay" aria-hidden="true"></div>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main id="main" role="main">
+
+      <!-- Alert Bar -->
+      <div id="alert-bar" role="alert" aria-live="assertive">
+        <span class="alert-bar-icon">🚨</span>
+        <span class="alert-bar-text" id="alert-bar-text"></span>
+        <button class="alert-bar-dismiss" id="alert-bar-dismiss" aria-label="Dismiss alert">✕</button>
+      </div>
+
+      <!-- Top Bar -->
+      <header id="topbar" role="banner">
+        <div class="topbar-left">
+          <button id="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="sidebar">
+            ☰
+          </button>
+          <div class="breadcrumb">
+            MonsoonGuard &rsaquo; <span id="page-title">Dashboard</span>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="topbar-weather-pill" id="topbar-weather" role="status" aria-label="Current weather">
+            <span id="topbar-weather-icon">🌡️</span>
+            <span id="topbar-weather-text">Loading...</span>
+          </div>
+          <div class="risk-indicator" id="risk-indicator" role="status" aria-label="Current risk level">
+            <div class="risk-dot moderate" id="risk-dot"></div>
+            <span id="risk-label">Assessing...</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div id="page-content" role="region" aria-label="Page content">
+        <!-- Pages are dynamically injected here -->
+        <div id="page-loading" class="empty-state" aria-busy="true">
+          <div class="spinner spinner-lg"></div>
+          <p>Loading MonsoonGuard AI...</p>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ========== BOTTOM NAV (Mobile) ========== -->
+    <nav id="bottom-nav" role="navigation" aria-label="Mobile navigation">
+      <button class="bottom-nav-item active" data-page="dashboard" aria-label="Dashboard">
+        <span class="nav-icon" aria-hidden="true">🏠</span>
+        <span>Home</span>
+      </button>
+      <button class="bottom-nav-item" data-page="chat" aria-label="AI Assistant">
+        <span class="nav-icon" aria-hidden="true">🤖</span>
+        <span>AI Chat</span>
+      </button>
+      <button class="bottom-nav-item" data-page="checklist" aria-label="Checklist">
+        <span class="nav-icon" aria-hidden="true">✅</span>
+        <span>Checklist</span>
+      </button>
+      <button class="bottom-nav-item" data-page="profile" aria-label="Profile">
+        <span class="nav-icon" aria-hidden="true">👤</span>
+        <span>Profile</span>
+      </button>
+    </nav>
+
+  </div><!-- #app -->
+
+  <!-- External Libraries (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@13.0.2/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+
+  <!-- App Modules (in dependency order) -->
+  <script src="/js/utils/storage.js"    type="module"></script>
+  <script src="/js/utils/sanitize.js"   type="module"></script>
+  <script src="/js/utils/location.js"   type="module"></script>
+  <script src="/js/utils/i18n.js"       type="module"></script>
+  <script src="/js/state.js"            type="module"></script>
+  <script src="/js/api.js"              type="module"></script>
+  <script src="/js/pages/dashboard.js"  type="module"></script>
+  <script src="/js/pages/plan.js"       type="module"></script>
+  <script src="/js/pages/checklist.js"  type="module"></script>
+  <script src="/js/pages/chat.js"       type="module"></script>
+  <script src="/js/pages/shelters.js"   type="module"></script>
+  <script src="/js/pages/travel.js"     type="module"></script>
+  <script src="/js/pages/recovery.js"   type="module"></script>
+  <script src="/js/pages/profile.js"    type="module"></script>
+  <script src="/js/app.js"              type="module"></script>
+
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
