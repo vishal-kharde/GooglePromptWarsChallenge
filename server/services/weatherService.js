@@ -5,8 +5,9 @@
  * Handles geocoding (city name → lat/lon) and forecast retrieval.
  */
 
-// Use native fetch (Node 18+) if available, falling back to node-fetch for compatibility
-const fetchFn = typeof global.fetch === 'function' ? global.fetch : require('node-fetch');
+// Use node-fetch to respect dns.setDefaultResultOrder('ipv4first')
+// and avoid undici/native fetch "fetch failed" errors on Render.com.
+const fetchFn = require('node-fetch');
 require('dotenv').config();
 
 const BASE_URL   = process.env.OPEN_METEO_BASE_URL  || 'https://api.open-meteo.com/v1';
