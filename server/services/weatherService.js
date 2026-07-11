@@ -5,12 +5,13 @@
  * Handles geocoding (city name → lat/lon) and forecast retrieval.
  */
 
-const fetch = require('node-fetch');
+// Use native fetch (Node 18+) if available, falling back to node-fetch for compatibility
+const fetchFn = typeof global.fetch === 'function' ? global.fetch : require('node-fetch');
 require('dotenv').config();
 
 const BASE_URL   = process.env.OPEN_METEO_BASE_URL  || 'https://api.open-meteo.com/v1';
 const GEO_URL    = process.env.OPEN_METEO_GEO_URL   || 'https://geocoding-api.open-meteo.com/v1';
-const TIMEOUT_MS = 8000;
+const TIMEOUT_MS = 15000; // Increased to 15s to handle slower external API queries on Render
 
 /**
  * Fetch with timeout wrapper.
@@ -21,9 +22,14 @@ async function fetchWithTimeout(url, timeoutMs = TIMEOUT_MS) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const res = await fetch(url, { signal: controller.signal });
+    const res = await fetchFn(url, { signal: controller.signal });
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
     return await res.json();
+  } catch (err) {
+    if (err.name === 'AbortError') {
+      throw new Error(`Request timed out after ${timeoutMs}ms`);
+    }
+    throw err;
   } finally {
     clearTimeout(timer);
   }
