@@ -17,6 +17,7 @@ const aiRoutes        = require('./routes/ai');
 const weatherRoutes   = require('./routes/weather');
 const shelterRoutes   = require('./routes/shelters');
 const checklistRoutes = require('./routes/checklist');
+const reportsRoutes   = require('./routes/reports');
 const { sanitizeBody }                = require('./middleware/sanitizer');
 const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
 
@@ -92,6 +93,7 @@ app.use('/api/ai',        aiRoutes);
 app.use('/api/weather',   weatherRoutes);
 app.use('/api/shelters',  shelterRoutes);
 app.use('/api/checklist', checklistRoutes);
+app.use('/api/reports',   reportsRoutes);
 
 // ============================================================
 // Static Files (Frontend SPA)

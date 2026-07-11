@@ -83,7 +83,13 @@ function seed() {
   insertReports(sampleReports);
 
   console.log('✅ Sample community reports added.');
-  process.exit(0);
 }
 
-seed();
+// Only exit when run directly as a standalone script (e.g. `node server/db/seed.js`).
+// When required() inline from the server, do NOT exit — it would kill the server process.
+if (require.main === module) {
+  seed();
+  process.exit(0);
+} else {
+  seed();
+}
